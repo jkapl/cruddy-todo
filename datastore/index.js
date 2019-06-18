@@ -9,7 +9,7 @@ var items = {};
 
 exports.create = (text, callback) => {
   counter.getNextUniqueId((err, id) => {
-    items[id] = text;
+    items[id] = text; //side effect - modifies local variable items which is not saved to filesystem
     fs.writeFile(path.join(exports.dataDir, id + '.txt'), text, (err) => {
       if (err) {
         callback(err, null);
@@ -36,12 +36,20 @@ exports.readAll = (callback) => {
 };
 
 exports.readOne = (id, callback) => {
-  var text = items[id];
-  if (!text) {
-    callback(new Error(`No item with id: ${id}`));
-  } else {
-    callback(null, { id, text });
-  }
+  fs.readFile(path.join(exports.dataDir, id + '.txt'), 'utf8', (err, data) => {
+    if (err) {
+      callback(new Error(`No item with id: ${id}`));
+    } else {
+      console.log(data);
+      callback(null, { id, text: data });
+    }
+  })
+  // var text = items[id]; //same as create - only modifying object in current instance of server
+  // if (!text) {
+  //   callback(new Error(`No item with id: ${id}`));
+  // } else {
+  //   callback(null, { id, text });
+  // }
 };
 
 exports.update = (id, text, callback) => {

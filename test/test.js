@@ -90,7 +90,6 @@ describe('todos', () => {
     it('should only save todo text contents in file', (done) => {
       const todoText = 'walk the dog';
       todos.create(todoText, (err, todo) => {
-        console.log({todo});
         const todoFileContents = fs.readFileSync(path.join(todos.dataDir, `${todo.id}.txt`)).toString();
         expect(todoFileContents).to.equal(todoText);
         done();
@@ -107,7 +106,7 @@ describe('todos', () => {
     });
   });
 
-  describe.only('readAll', () => {
+  describe('readAll', () => {
     it('should return an empty array when there are no todos', (done) => {
       todos.readAll((err, todoList) => {
         expect(err).to.be.null;
