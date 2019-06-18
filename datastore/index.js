@@ -43,23 +43,34 @@ exports.readOne = (id, callback) => {
       console.log(data);
       callback(null, { id, text: data });
     }
-  })
-  // var text = items[id]; //same as create - only modifying object in current instance of server
-  // if (!text) {
-  //   callback(new Error(`No item with id: ${id}`));
-  // } else {
-  //   callback(null, { id, text });
-  // }
+  });
 };
 
 exports.update = (id, text, callback) => {
-  var item = items[id];
-  if (!item) {
-    callback(new Error(`No item with id: ${id}`));
-  } else {
-    items[id] = text;
-    callback(null, { id, text });
-  }
+  //re-write the file
+
+  //first check and see if file exsists
+  //  if it does exist then we rewrite
+    //else return no item with id
+
+  //use some func to read file: readOne or fs.read
+
+    //err: return no item with id
+    //success: create a call back to utilize fs.write
+
+  exports.readOne(id, (err, data) => {
+    if (err) {
+      callback(new Error(`No item with id: ${id}`));
+    } else {
+      fs.writeFile(path.join(exports.dataDir, id + '.txt'), text, 'utf8', (err) => {
+        if(err) {
+          console.log('error');
+        } else {
+          callback(null, { id, text })
+        }
+      });
+    }
+  })
 };
 
 exports.delete = (id, callback) => {
