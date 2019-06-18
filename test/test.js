@@ -66,7 +66,7 @@ describe('todos', () => {
   beforeEach(initializeTestCounter);
   beforeEach(cleanTestDatastore);
 
-  describe.only('create', () => {
+  describe('create', () => {
     it('should create a new file for each todo', (done) => {
       todos.create('todo1', (err, data) => {
         const todoCount = fs.readdirSync(todos.dataDir).length;
@@ -107,7 +107,7 @@ describe('todos', () => {
     });
   });
 
-  describe('readAll', () => {
+  describe.only('readAll', () => {
     it('should return an empty array when there are no todos', (done) => {
       todos.readAll((err, todoList) => {
         expect(err).to.be.null;
