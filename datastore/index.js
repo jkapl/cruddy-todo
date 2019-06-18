@@ -51,12 +51,12 @@ exports.update = (id, text, callback) => {
 
   //first check and see if file exsists
   //  if it does exist then we rewrite
-    //else return no item with id
+  //else return no item with id
 
   //use some func to read file: readOne or fs.read
 
-    //err: return no item with id
-    //success: create a call back to utilize fs.write
+  //err: return no item with id
+  //success: create a call back to utilize fs.write
 
   exports.readOne(id, (err, data) => {
     if (err) {
@@ -66,11 +66,11 @@ exports.update = (id, text, callback) => {
         if(err) {
           console.log('error');
         } else {
-          callback(null, { id, text })
+          callback(null, { id, text });
         }
       });
     }
-  })
+  });
 };
 
 exports.delete = (id, callback) => {
